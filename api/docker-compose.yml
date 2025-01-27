@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  # Service principal de l'API
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tasks-api
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    volumes:
+      - ./src:/app/src
+      - ./package.json:/app/package.json
+      - ./package-lock.json:/app/package-lock.json
+      # Exclure node_modules du montage
+      - /app/node_modules
+    command: npm run dev
+    restart: unless-stopped
+
+  # Service pour les tests
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tasks-api-test
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm test
+
+  # Service pour le linting
+  lint:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tasks-api-lint
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run lint
