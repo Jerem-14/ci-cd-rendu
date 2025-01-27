@@ -1,2 +1,6 @@
-# ci-cd-rendu
-Projet de test de CI et de CD
+# Rendu projet CI-CD
+
+## Participants :
+
+- Jeremy AUBRY
+- Antoine FALGIGLIO
