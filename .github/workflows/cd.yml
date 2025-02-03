@@ -1,4 +1,4 @@
-name: cd
+name: CD
 on:
   push:
     branches: ["main"]
@@ -19,7 +19,7 @@ jobs:
       - name: "Build Docker image"
         uses: docker/build-push-action@v6
         with:
-          context: ./
+          context: ./api
           push: false
           tags: "jerem14/tasks-api:test"
           load: true
@@ -35,7 +35,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         with:
           push: true
-          context: ./
+          context: ./api
           tags: "jerem14/tasks-api:unstable"
 
       - name: "Push if tag"
@@ -43,5 +43,5 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           push: true
-          context: ./
+          context: ./api
           tags: "jerem14/tasks-api:${{ github.ref_name }}"
